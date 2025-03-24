@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Waste Report Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #e0f5e9, #f0f7f2, #e0f5e9);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: 300% 300%;
+            animation: gradientMovement 15s ease infinite;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        @keyframes gradientMovement {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            width: 450px;
+            position: relative;
+            z-index: 10;
+            border: 1px solid rgba(230, 240, 230, 0.5);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            margin-bottom: 25px;
+            color: #2a7344;
+            font-weight: 600;
+            font-size: 28px;
+            position: relative;
+            padding-bottom: 10px;
+            animation: slideIn 1s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #63b175;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        h1:hover::after {
+            width: 120px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .form-group {
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: formElementFadeIn 0.5s ease forwards;
+        }
+
+        @keyframes formElementFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Staggered animations for form elements */
+        .form-group:nth-child(1) { animation-delay: 0.2s; }
+        .form-group:nth-child(2) { animation-delay: 0.4s; }
+        .form-group:nth-child(3) { animation-delay: 0.6s; }
+        .form-group:nth-child(4) { animation-delay: 0.8s; }
+        .form-group:nth-child(5) { animation-delay: 1s; }
+        .form-group:nth-child(6) { animation-delay: 1.2s; }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            color: #333;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #63b175;
+            box-shadow: 0 0 0 2px rgba(99, 177, 117, 0.1);
+            background-color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        input:hover, textarea:hover {
+            background-color: #f0f9f0;
+        }
+
+        /* Custom file input styling */
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            border: 1px dashed #ccc;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .file-input-container:hover {
+            background-color: #f0f9f0;
+            border-color: #63b175;
+        }
+
+        .file-input-label {
+            display: block;
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .file-preview {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+            border-radius: 8px;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        button {
+            background-color: #2a7344;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease, transform 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: buttonFadeIn 0.8s ease 1.4s forwards;
+        }
+
+        @keyframes buttonFadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        button:hover {
+            background-color: #358952;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        button:hover::after {
+            left: 100%;
+        }
+
+        .success-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            z-index: 15;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            width: 350px;
+        }
+
+        .success-popup.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* New success animation */
+        .success-checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            position: relative;
+            transform: scale(0);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.3s;
+        }
+
+        .success-popup.active .success-checkmark {
+            transform: scale(1);
+        }
+
+        .success-checkmark .check-icon {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            border-radius: 50%;
+            box-sizing: content-box;
+            border: 4px solid #4CAF50;
+        }
+
+        .success-checkmark .check-icon::before {
+            content: "";
+            position: absolute;
+            width: 5px;
+            height: 30px;
+            background-color: #4CAF50;
+            left: 28px;
+            top: 45px;
+            border-radius: 2px;
+            transform: rotate(-45deg);
+            animation: checkmarkAnimation 0.3s ease 0.8s forwards;
+            opacity: 0;
+        }
+
+        .success-checkmark .check-icon::after {
+            content: "";
+            position: absolute;
+            width: 5px;
+            height: 15px;
+            background-color: #4CAF50;
+            left: 46px;
+            top: 50px;
+            border-radius: 2px;
+            transform: rotate(45deg);
+            animation: checkmarkAnimation 0.3s ease 0.8s forwards;
+            opacity: 0;
+        }
+
+        @keyframes checkmarkAnimation {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Overlay effect when popup is shown */
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 14;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Close button styling */
+        .close-popup {
+            background-color: #2a7344;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .close-popup:hover {
+            background-color: #358952;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="backdrop" id="backdrop"></div>
+    <div class="container">
+        <h1>Report E-Waste</h1>
+        <form id="reportForm">
+            <div class="form-group">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="contact" name="contact" placeholder="Your Contact" required>
+            </div>
+            <div class="form-group">
+                <div class="file-input-container" id="fileInputContainer">
+                    <span class="file-input-label">Upload an image of the e-waste</span>
+                    <input type="file" id="image" name="image" accept="image/*" required style="display: none;">
+                    <img id="imagePreview" class="file-preview">
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" id="location" name="location" placeholder="Your Location" required>
+            </div>
+            <div class="form-group">
+                <textarea id="description" name="description" rows="4" placeholder="Description of the issue" required></textarea>
+            </div>
+            <button type="submit">Submit Report</button>
+        </form>
+    </div>
+    <div class="success-popup" id="successPopup">
+        <div class="success-checkmark">
+            <div class="check-icon"></div>
+        </div>
+        <h2>Thank You!</h2>
+        <p>Your e-waste report has been submitted successfully.</p>
+        <button class="close-popup" id="closePopup">Close</button>
+    </div>
+    <script>
+        // Image preview functionality
+        document.getElementById('fileInputContainer').addEventListener('click', function() {
+            document.getElementById('image').click();
+        });
+
+        document.getElementById('image').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                const preview = document.getElementById('imagePreview');
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    setTimeout(() => {
+                        preview.style.opacity = '1';
+                    }, 50);
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Form submission and popup handling
+        document.getElementById('reportForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Add animation to form submission
+            const formElements = document.querySelectorAll('.form-group, button');
+            formElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                    el.style.transform = 'translateY(-20px)';
+                    el.style.opacity = '0';
+                }, index * 100);
+            });
+            
+            setTimeout(() => {
+                document.getElementById('backdrop').classList.add('active');
+                document.getElementById('successPopup').classList.add('active');
+            }, formElements.length * 100 + 300);
+        });
+
+        document.getElementById('closePopup').addEventListener('click', function() {
+            document.getElementById('successPopup').classList.remove('active');
+            document.getElementById('backdrop').classList.remove('active');
+            
+            // Reset form with animation
+            setTimeout(() => {
+                document.getElementById('reportForm').reset();
+                document.getElementById('imagePreview').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('imagePreview').style.display = 'none';
+                }, 500);
+                
+                const formElements = document.querySelectorAll('.form-group, button');
+                formElements.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                        el.style.transform = 'translateY(0)';
+                        el.style.opacity = '1';
+                    }, index * 100);
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>

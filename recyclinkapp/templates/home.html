@@ -1,0 +1,1165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>RecycLink Connect | Responsible E-Waste Disposal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2ecc71;
+      --primary-dark: #27ae60;
+      --secondary: #3498db;
+      --dark: #2c3e50;
+      --light: #ecf0f1;
+      --gray: #95a5a6;
+      --white: #ffffff;
+      --accent: #f39c12;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    ul {
+      list-style: none;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 4px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-secondary {
+      background: var(--white);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+    
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    
+    .text-center {
+      text-align: center;
+    }
+    
+    .text-center .section-title:after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    /* Header styles */
+    .header {
+      background-color: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .logo i {
+      margin-right: 0.5rem;
+      font-size: 1.8rem;
+    }
+    
+    .nav-menu {
+      display: flex;
+      align-items: center;
+    }
+    
+    .nav-item {
+      margin-left: 2rem;
+      position: relative;
+    }
+    
+    .nav-link {
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: var(--primary);
+    }
+    
+    .nav-link.active {
+      color: var(--primary);
+    }
+    
+    .nav-link.active:after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    
+    .hamburger {
+      display: none;
+      cursor: pointer;
+    }
+    
+    /* Hero section */
+    .hero {
+    padding: 6rem 0 4rem; /* Reduced padding */
+    min-height: 80vh; /* Reduced from 100vh */
+    background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), 
+                url("{% static 'images/1288015.png' %}") center/60% no-repeat; /* Reduced from 80% */
+    background-color: var(--dark);
+    color: var(--white);
+    text-align: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Adjust hero content for better proportions */
+.hero-content {
+    max-width: 700px; /* Reduced from 800px */
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    padding: 1.5rem; /* Reduced padding */
+}
+
+.hero-title {
+    font-size: 2.8rem; /* Reduced from 3.5rem */
+    margin-bottom: 1rem; /* Reduced margin */
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.3rem; /* Reduced from 1.5rem */
+    margin-bottom: 1.5rem; /* Reduced margin */
+    font-weight: 300;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Adjust responsive breakpoint */
+@media (max-width: 768px) {
+    .hero {
+        background-size: 75%; /* Adjusted for mobile */
+        min-height: 70vh; /* Even smaller on mobile */
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+}
+
+    .partners {
+    padding: 5rem 0;
+    background: var(--white);
+}
+
+.partners-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+.partner-item {
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+}
+
+.partner-logo {
+    height: 60px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.partner-logo:hover {
+    opacity: 1;
+}
+
+.partner-name {
+    font-size: 1.1rem;
+    color: var(--dark);
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .partners-grid {
+        gap: 2rem;
+    }
+    
+    .partner-item {
+        flex: 0 0 calc(50% - 1rem);
+    }
+}
+    
+    /* Features section */
+    .features {
+      padding: 5rem 0;
+      background: var(--light);
+    }
+    
+    .features-intro {
+      max-width: 700px;
+      margin: 0 auto 4rem;
+      text-align: center;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .feature-card {
+      background: var(--white);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .feature-icon {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--white);
+      padding: 2rem;
+    }
+    
+    .feature-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+    
+    .feature-card:hover .feature-img {
+      transform: scale(1.1);
+    }
+    
+    .feature-content {
+      padding: 2rem;
+    }
+    
+    .feature-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var (--dark);
+    }
+    
+    .feature-text {
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+    
+    /* How it works section */
+    .how-it-works {
+      padding: 5rem 0;
+      background: var(--white);
+    }
+    
+    .process-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin-top: 4rem;
+    }
+    
+    .process-steps:before {
+      content: '';
+      position: absolute;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--light);
+      z-index: 1;
+    }
+    
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+    }
+    
+    .step-number {
+        width: 100px;
+        height: 100px;
+        background: var(--primary);
+        color: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        position: relative;
+    }
+
+    .step-number i {
+        font-size: 2.5rem;
+    }
+    
+    .step-title {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+    
+    .step-text {
+      color: var(--gray);
+      padding: 0 1rem;
+    }
+    
+    /* About section */
+    .about {
+      padding: 5rem 0;
+      background: var(--light);
+    }
+    
+    .about-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 3rem;
+      align-items: center;
+    }
+    
+    .about-image {
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .about-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    
+    .about-image:hover img {
+      transform: scale(1.05);
+    }
+    
+    .about-text p {
+      margin-bottom: 1.5rem;
+      color: var(--gray);
+    }
+    
+    .stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: nowrap;
+}
+
+.stat-item {
+    flex: 1;
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+    /* Testimonials section */
+    .testimonials {
+      padding: 5rem 0;
+      background: var(--white);
+    }
+    
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .testimonial-card {
+      background: var(--light);
+      padding: 2rem;
+      border-radius: 8px;
+      position: relative;
+    }
+    
+    .testimonial-card:before {
+      content: '\201C';
+      font-size: 5rem;
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      color: rgba(46, 204, 113, 0.2);
+      font-family: Georgia, serif;
+    }
+    
+    .testimonial-text {
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+      font-style: italic;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .testimonial-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 1rem;
+    }
+    
+    .author-name {
+      font-weight: 600;
+      color: var (--dark);
+    }
+    
+    .author-title {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+    
+    /* Call to action section */
+    .cta {
+      padding: 5rem 0;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: var(--white);
+      text-align: center;
+    }
+    
+    .cta-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .cta-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .cta-text {
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    /* Contact section */
+    .contact {
+      padding: 5rem 0;
+      background: var(--light);
+    }
+    
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+    
+    .contact-info ul li {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+    }
+    
+    .contact-icon {
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin-right: 1rem;
+    }
+    
+    .contact-text {
+      color: var(--gray);
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-3px);
+    }
+    
+    .contact-form .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .contact-form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+      font-weight: 500;
+    }
+    
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+    
+    .contact-form textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    /* Footer section */
+    .footer {
+      padding: 3rem 0 1rem;
+      background: var(--dark);
+      color: var(--light);
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .footer-column h3 {
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+    
+    .footer-column h3:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: var(--primary);
+    }
+    
+    .footer-column p {
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.8rem;
+    }
+    
+    .footer-links a {
+      color: var(--gray);
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 992px) {
+      .process-steps {
+        flex-direction: column;
+        gap: 2rem;
+      }
+      
+      .process-steps:before {
+        display: none;
+      }
+      
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .navbar {
+        position: relative;
+      }
+      
+      .nav-menu {
+        position: absolute;
+        top: 100%;
+        right: -100%;
+        width: 250px;
+        background: var(--white);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem;
+        transition: right 0.3s ease;
+        height: calc(100vh - 70px);
+      }
+      
+      .nav-menu.active {
+        right: 0;
+      }
+      
+      .nav-item {
+        margin: 1rem 0;
+        width: 100%;
+      }
+      
+      .hamburger {
+        display: block;
+      }
+      
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .hero-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .hero {
+        background-size: 75%;
+        min-height: 70vh;
+    }
+    
+    .navbar {
+        position: relative;
+    }
+    
+    .nav-menu {
+        position: absolute;
+        top: 100%;
+        right: -100%;
+        width: 250px;
+        background: var(--white);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem;
+        transition: right 0.3s ease;
+        height: calc(100vh - 70px);
+    }
+}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="#" class="logo">
+          <i class="fas fa-recycle"></i> RecycLink Connect
+        </a>
+        
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="#home" class="nav-link active">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="#features" class="nav-link">Features</a>
+          </li>
+          <li class="nav-item">
+            <a href="#how-it-works" class="nav-link">How It Works</a>
+          </li>
+          <li class="nav-item">
+            <a href="#about" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="#contact" class="nav-link">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'login' %}" class="btn">Login</a>
+          </li>
+        </ul>
+        
+        <div class="hamburger">
+          <i class="fas fa-bars"></i>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">Responsible E-Waste Disposal Made Easy</h1>
+        <p class="hero-subtitle">Connect with recyclers, earn rewards, and help build a sustainable future</p>
+        <div class="hero-btns">
+          <a href="#" class="btn">Find Recycling Centers</a>
+          <a href="{% url 'report'%}" class="btn btn-secondary">Request Pickup</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partners Section -->
+  <section class="partners">
+    <div class="container">
+      <h2 class="section-title text-center">Our Partners</h2>
+      <p class="text-center">Working together for a sustainable future</p>
+      
+      <div class="partners-grid">
+        <div class="partner-item">
+          <img src="{% static 'images/deal.png' %}" alt="Dell Logo" class="partner-logo">
+          <h4 class="partner-name">Dell Technologies</h4>
+        </div>
+        <div class="partner-item">
+          <img src="{% static 'images/deal.png' %}" alt="HP Logo" class="partner-logo">
+          <h4 class="partner-name">HP Inc.</h4>
+        </div>
+        
+        <div class="partner-item">
+          <img src="{% static 'images/deal.png' %}" alt="Samsung Logo" class="partner-logo">
+          <h4 class="partner-name">Samsung</h4>
+        </div>
+        <div class="partner-item">
+          <img src="{% static 'images/deal.png' %}" alt="Microsoft Logo" class="partner-logo">
+          <h4 class="partner-name">Microsoft</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="features-intro">
+        <h2 class="section-title text-center">Our Features</h2>
+        <p>RecycLink Connect offers a comprehensive platform to address e-waste challenges through cutting-edge technology and community engagement.</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <img src="{% static 'images/map.png' %}" alt="Locate Centers" class="feature-img">
+          </div>
+          <div class="feature-content">
+            <h3 class="feature-title">Locate Recycling Centers</h3>
+            <p class="feature-text">Find the nearest e-waste collection centers with our interactive map. Filter by accepted items, operating hours, and user reviews.</p>
+            <a href="#" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <img src="{% static 'images/delivery.png' %}" alt="Pickup Services" class="feature-img">
+          </div>
+          <div class="feature-content">
+            <h3 class="feature-title">Pickup Services</h3>
+            <p class="feature-text">Schedule convenient pickup services for your e-waste. Our certified partners ensure responsible collection and transportation.</p>
+            <a href="#" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <img src="{% static 'images/benefit.png' %}" alt="Rewards Program" class="feature-img">
+          </div>
+          <div class="feature-content">
+            <h3 class="feature-title">Rewards Program</h3>
+            <p class="feature-text">Earn points, badges, and real-world incentives for your recycling efforts. Redeem rewards with our eco-friendly merchant partners.</p>
+            <a href="#" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="how-it-works">
+    <div class="container">
+      <h2 class="section-title text-center">How It Works</h2>
+      <p class="text-center">RecycLink Connect simplifies e-waste recycling in just a few steps</p>
+      
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-number">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <h3 class="step-title">Register</h3>
+          <p class="step-text">Create your account as a consumer, business, recycler, or NGO partner.</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">
+            <i class="fas fa-link"></i>
+          </div>
+          <h3 class="step-title">Connect</h3>
+          <p class="step-text">Find recycling centers or schedule pickups through our platform.</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">
+            <i class="fas fa-recycle"></i>
+          </div>
+          <h3 class="step-title">Recycle</h3>
+          <p class="step-text">Dispose of your e-waste responsibly with our verified partners.</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">
+            <i class="fas fa-gift"></i>
+          </div>
+          <h3 class="step-title">Earn Rewards</h3>
+          <p class="step-text">Get incentives for your contributions to sustainable e-waste management.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-image">
+          <img src="{% static 'images/1288015.png' %}" alt="About RecycLink Connect">
+        </div>
+        
+        <div class="about-text">
+          <h2 class="section-title">About RecycLink Connect</h2>
+          <p>RecycLink Connect was founded with a mission to address the growing global e-waste crisis through technology and community engagement. Our platform bridges the gap between consumers wanting to dispose of electronic waste responsibly and certified recyclers who can process these materials safely.</p>
+          <p>By creating a circular economy around electronic waste, we're not only protecting the environment from harmful materials but also recovering valuable resources that can be reused in manufacturing.</p>
+          
+          <div class="stats">
+            <div class="stat-item">
+              <div class="stat-number">10K+</div>
+              <div class="stat-label">Recycling Centers</div>
+            </div>
+            
+            <div class="stat-item">
+              <div class="stat-number">500K+</</div>
+              <div class="stat-label">Users</div>
+            </div>
+            
+            <div class="stat-item">
+              <div class="stat-number">5M+</</div>
+              <div class="stat-label">Devices Recycled</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="section-title text-center">What People Say</h2>
+      <p class="text-center">Hear from users who have made a difference with RecycLink Connect</p>
+      
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-text">RecycLink Connect made it so easy to find a place to recycle my old electronics. The pickup service was prompt and professional, and I love earning rewards for doing something good for the environment!</p>
+          <div class="testimonial-author">
+            <img src="{% static 'images/p3.jpg' %}" alt="User Avatar" class="testimonial-avatar">
+            <div>
+              <div class="author-name">Sarah Johnson</div>
+              <div class="author-title">Consumer</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <p class="testimonial-text">As a small business owner, managing our IT waste was always a challenge. RecycLink Connect has streamlined our e-waste disposal process and helped us meet our sustainability goals.</p>
+          <div class="testimonial-author">
+            <img src="{% static 'images/p2.jpg' %}" alt="User Avatar" class="testimonial-avatar">
+            <div>
+              <div class="author-name">Michael Chen</div>
+              <div class="author-title">Business Owner</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <p class="testimonial-text">The platform has significantly increased the volume of e-waste we process. The streamlined connection with consumers and businesses has been a game-changer for our recycling facility.</p>
+          <div class="testimonial-author">
+            <img src="{% static 'images/p11.jpg' %}" alt="User Avatar" class="testimonial-avatar">
+            <div>
+              <div class="author-name">James Rodriguez</div>
+              <div class="author-title">Recycling Partner</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Join the E-Waste Revolution</h2>
+        <p class="cta-text">Be part of the solution to electronic waste. Start recycling responsibly today and earn rewards for your contribution.</p>
+        <a href="#" class="btn btn-secondary">Sign Up Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2 class="section-title text-center">Contact Us</h2>
+      <p class="text-center">Have questions or suggestions? We'd love to hear from you.</p>
+      
+      <div class="contact-grid">
+        <div class="contact-info">
+          <ul>
+            <li>
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-text">
+                123 Eco Street, Green City, Earth 54321
+              </div>
+            </li>
+            
+            <li>
+              <div class="contact-icon">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+              <div class="contact-text">
+                +1 (555) 123-4567
+              </div>
+            </li>
+            
+            <li>
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-text">
+                info@recyclink-connect.com
+              </div>
+            </li>
+          </ul>
+          
+          <div class="social-icons">
+            <a href="#" class="social-icon">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-icon">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-icon">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-icon">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="contact-form">
+          <form action="#" method="POST">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+            
+            <button type="submit" class="btn">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h3>About Us</h3>
+          <p>RecycLink Connect is dedicated to promoting responsible e-waste disposal and creating a sustainable future through technology and community engagement.</p>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Contact Info</h3>
+          <ul class="footer-links">
+            <li><a href="#">123 Eco Street, Green City, Earth 54321</a></li>
+            <li><a href="#">+1 (555) 123-4567</a></li>
+            <li><a href="#">info@recyclink-connect.com</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        &copy; 2025 RecycLink Connect. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

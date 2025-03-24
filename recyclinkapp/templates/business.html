@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            scroll-behavior: smooth; /* Enables smooth scrolling */
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9, #ffffff);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: linear-gradient(135deg, #388e3c, #66bb6a);
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar ul li a.active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .sub-menu {
+            margin-left: 20px;
+            display: none;
+        }
+
+        .sidebar li:hover .sub-menu {
+            display: block;
+        }
+
+        .sub-menu li {
+            margin: 5px 0;
+        }
+
+        .sub-menu a {
+            font-size: 0.9rem;
+            padding: 8px !important;
+        }
+
+        .section-content {
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 20px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            width: 300px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            outline: none;
+        }
+
+        .search-bar button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: #388e3c;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: #2e7d32;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: #fff;
+        }
+
+        section h2 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        /* History Section */
+        .history-subsection {
+            margin-top: 20px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-item:hover {
+            background: #f9f9f9;
+        }
+
+        .history-item .details {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .history-item .status {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #388e3c;
+        }
+
+        .history-item.pending .status {
+            color: #f57c00;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .search-bar input {
+                width: 100%;
+            }
+        }
+
+        .history-section {
+            padding: 30px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .history-subsection {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .history-subsection h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .history-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            transition: transform 0.2s ease;
+        }
+
+        .history-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-info h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .details {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 5px 0;
+        }
+
+        .order-status {
+            text-align: right;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-badge.pending {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status-badge.solved {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .time {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .history-item {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .order-status {
+                text-align: left;
+            }
+        }
+
+        .done-btn {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .done-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Business Dashboard</h2>
+            <ul>
+                <li><a href="#customers" class="nav-link"><i class="fas fa-users"></i> Customers</a></li>
+                <li><a href="#products" class="nav-link"><i class="fas fa-box"></i> Products</a></li>
+                <li>
+                    <a href="#history" class="nav-link"><i class="fas fa-history"></i> History</a>
+                    <ul class="sub-menu">
+                        <li><a href="#pending" class="nav-link"><i class="fas fa-clock"></i> Pending Orders</a></li>
+                        <li><a href="#completed" class="nav-link"><i class="fas fa-check-circle"></i> Completed Orders</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <h1>Dashboard Overview</h1>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search...">
+                    <button>Search</button>
+                </div>
+            </div>
+
+            <!-- Customers Section -->
+            <section id="customers">
+                <h2>Customers</h2>
+                <p>We currently have 1,250 active customers.</p>
+            </section>
+
+            <!-- Products Section -->
+            <section id="products">
+                <h2>Products</h2>
+                <p>We offer 320 products available for purchase.</p>
+            </section>
+
+            <!-- History Section -->
+            <section id="history" class="history-section">
+                <h2>Order History</h2>
+                
+                <!-- Pending Orders Section -->
+                <div id="pending" class="section-content">
+                    <div class="history-subsection pending-section">
+                        <h3><i class="fas fa-clock"></i> Pending Orders</h3>
+                        <div class="order-list">
+                            <div class="history-item pending">
+                                <div class="order-info">
+                                    <h4>Order #12345</h4>
+                                    <p class="details">Customer: John Doe</p>
+                                    <p class="details">Items: 3 Products</p>
+                                    <p class="details">Total: $156.99</p>
+                                </div>
+                                <div class="order-status">
+                                    <span class="status-badge pending">Processing</span>
+                                    <p class="time">2 hours ago</p>
+                                    <button class="done-btn" onclick="markAsDone('12345')">Mark as Done</button>
+                                </div>
+                            </div>
+                            <div class="history-item pending">
+                                <div class="order-info">
+                                    <h4>Order #12346</h4>
+                                    <p class="details">Customer: Jane Smith</p>
+                                    <p class="details">Items: 1 Product</p>
+                                    <p class="details">Total: $49.99</p>
+                                </div>
+                                <div class="order-status">
+                                    <span class="status-badge pending">Payment Pending</span>
+                                    <p class="time">5 hours ago</p>
+                                    <button class="done-btn" onclick="markAsDone('12346')">Mark as Done</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Completed Orders Section -->
+                <div id="completed" class="section-content">
+                    <div class="history-subsection solved-section">
+                        <h3><i class="fas fa-check-circle"></i> Completed Orders</h3>
+                        <div class="order-list">
+                            <div class="history-item solved">
+                                <div class="order-info">
+                                    <h4>Order #12344</h4>
+                                    <p class="details">Customer: Mike Johnson</p>
+                                    <p class="details">Items: 2 Products</p>
+                                    <p class="details">Total: $89.99</p>
+                                </div>
+                                <div class="order-status">
+                                    <span class="status-badge solved">Delivered</span>
+                                    <p class="time">Yesterday</p>
+                                </div>
+                            </div>
+                            <div class="history-item solved">
+                                <div class="order-info">
+                                    <h4>Order #12343</h4>
+                                    <p class="details">Customer: Sarah Williams</p>
+                                    <p class="details">Items: 4 Products</p>
+                                    <p class="details">Total: $199.99</p>
+                                </div>
+                                <div class="order-status">
+                                    <span class="status-badge solved">Delivered</span>
+                                    <p class="time">2 days ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling to sidebar links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                
+                // Hide all sections first
+                document.querySelectorAll('.section-content').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show the clicked section
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+
+                // Handle history section specially
+                if (targetId === 'history') {
+                    document.getElementById('pending').classList.add('active');
+                }
+            });
+        });
+
+        // Initialize the dashboard to show pending orders by default when history is selected
+        if (window.location.hash === '#history') {
+            document.getElementById('pending').classList.add('active');
+        }
+
+        function markAsDone(orderId) {
+            // Find the order element
+            const orderElement = document.querySelector(`.history-item:has(h4:contains("Order #${orderId}"))`);
+            if (orderElement) {
+                // Move the order to completed section
+                const completedList = document.querySelector('#completed .order-list');
+                orderElement.querySelector('.status-badge').textContent = 'Delivered';
+                orderElement.querySelector('.status-badge').classList.remove('pending');
+                orderElement.querySelector('.status-badge').classList.add('solved');
+                orderElement.querySelector('.done-btn').remove();
+                completedList.insertBefore(orderElement, completedList.firstChild);
+            }
+        }
+    </script>
+</body>
+</html>
