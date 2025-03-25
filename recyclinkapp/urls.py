@@ -12,4 +12,5 @@ urlpatterns = [
     path('report/', views.report, name='report'),
     path('feedback/', views.feedback, name='feedback'),
     path('blog/', views.blog, name='blog'),
+    path('update-points/', views.update_points, name='update_points'),
 ]

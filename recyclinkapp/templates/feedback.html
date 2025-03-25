@@ -68,6 +68,70 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
         }
+
+        /* Custom Modal Styles */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1050;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .custom-modal.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .custom-modal.show .modal-content {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            color: var(--text-green);
+            margin-bottom: 1rem;
+        }
+
+        .modal-btn {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 0.5rem 2rem;
+            border-radius: 25px;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn:hover {
+            background: var(--secondary-green);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -85,7 +149,7 @@
                         <a class="nav-link" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'request' %}">Request</a>
+                        <a class="nav-link" href="{% url 'report' %}">Request</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'feedback' %}">Feedback</a>
@@ -110,7 +174,7 @@
 
                 <div class="card feedback-card">
                     <div class="card-body p-4">
-                        <form id="feedbackForm" action="/submit-feedback" method="POST">
+                        <form id="feedbackForm" action="{% url 'feedback'%}" method="POST">
                             <!-- Overall Rating -->
                             <div class="mb-4 text-center">
                                 <label class="form-label">Rate Your Experience</label>
@@ -176,6 +240,16 @@
         </div>
     </div>
 
+    <div class="custom-modal" id="successModal">
+        <div class="modal-content">
+            <i class="bi bi-check-circle-fill success-icon"></i>
+            <h3 class="modal-title">Thank You!</h3>
+            <p>Your feedback has been submitted successfully.</p>
+            <p class="text-muted">We appreciate your time and input!</p>
+            <button class="modal-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Star Rating System
@@ -210,13 +284,44 @@
             });
         }
 
-        // Form Submission
+        // Form Submission and Modal Handling
         document.getElementById('feedbackForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            // Add your form submission logic here
-            alert('Thank you for your feedback!');
-            this.reset();
-            updateStars(0);
+            
+            // Simulate form submission
+            const formData = new FormData(this);
+            const submitButton = this.querySelector('button[type="submit"]');
+            
+            // Disable button and show loading state
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="bi bi-arrow-repeat bi-spin"></i> Submitting...';
+            
+            // Simulate API call with timeout
+            setTimeout(() => {
+                // Show success modal
+                const modal = document.getElementById('successModal');
+                modal.classList.add('show');
+                
+                // Reset form and stars
+                this.reset();
+                updateStars(0);
+                
+                // Reset button state
+                submitButton.disabled = false;
+                submitButton.innerHTML = 'Submit Feedback';
+            }, 1500);
+        });
+
+        function closeModal() {
+            const modal = document.getElementById('successModal');
+            modal.classList.remove('show');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
         });
     </script>
 </body>

@@ -792,12 +792,12 @@
     <div class="container">
       <nav class="navbar">
         <a href="#" class="logo">
-          <i class="fas fa-recycle"></i> RecycLink Connect
+          <i class="fas fa-recycle"></i> RecycLink 
         </a>
         
         <ul class="nav-menu">
           <li class="nav-item">
-            <a href="#home" class="nav-link active">Home</a>
+            <a href="{% url 'home'%}" class="nav-link active">Home</a>
           </li>
           <li class="nav-item">
             <a href="#features" class="nav-link">Features</a>
@@ -810,6 +810,12 @@
           </li>
           <li class="nav-item">
             <a href="#contact" class="nav-link">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'blog'%}"  class="nav-link">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'feedback' %}" class="nav-link">Feedback</a>
           </li>
           <li class="nav-item">
             <a href="{% url 'login' %}" class="btn">Login</a>
@@ -1035,7 +1041,7 @@
       <div class="cta-content">
         <h2 class="cta-title">Join the E-Waste Revolution</h2>
         <p class="cta-text">Be part of the solution to electronic waste. Start recycling responsibly today and earn rewards for your contribution.</p>
-        <a href="#" class="btn btn-secondary">Sign Up Now</a>
+        <a href="{% url 'login'%}" class="btn btn-secondary">Sign Up Now</a>
       </div>
     </div>
   </section>

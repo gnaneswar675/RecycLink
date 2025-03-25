@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import SignUpForm
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 def home(request):
@@ -75,3 +77,24 @@ def feedback(request):
 
 def blog(request):
     return render(request, 'blog.html')
+
+@require_POST
+def update_points(request):
+    data = json.loads(request.body)
+    points = data.get('points', 0)
+    
+    try:
+        # Update user points in your database
+        user = request.user
+        user.profile.points += points
+        user.profile.save()
+        
+        return JsonResponse({
+            'success': True,
+            'message': f'Added {points} points successfully'
+        })
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'message': str(e)
+        }, status=400)
