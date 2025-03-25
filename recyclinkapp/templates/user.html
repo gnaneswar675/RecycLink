@@ -109,11 +109,13 @@
                     <h3 class="mb-3">Your Reward Points</h3>
                     <h2 class="display-4 text-success mb-4">1,250</h2>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                        <button class="btn btn-custom me-md-2" onclick="alert('Request pickup to earn more points!')">
-                            <i class="bi bi-plus-circle"></i> Earn Points
+                        <button class="btn btn-custom me-md-2">
+                            <a href="{% url 'report' %}" style="text-decoration: none; color: white;">
+                                <i class="bi bi-plus-circle"></i> Earn Points
+                            </a>
                         </button>
                         <button class="btn btn-custom" onclick="alert('Coming soon: Redeem your points for rewards!')">
-                            <i class="bi bi-gift"></i> Redeem Points
+                            <i class="bi bi-gift"></i><a href="{% url 'redeem'%}" style="text-decoration: none; color: white;">Redeem Points</a> 
                         </button>
                     </div>
                 </div>

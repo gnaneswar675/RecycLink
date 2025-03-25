@@ -14,3 +14,4 @@ urlpatterns = [
     path('blog/', views.blog, name='blog'),
     path('update-points/', views.update_points, name='update_points'),
 ]
+
