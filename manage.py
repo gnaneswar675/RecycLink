@@ -1,280 +1,367 @@
-#!/usr/bin/env python
-"""Django's command-line utility for administrative tasks."""
-import os
-import sys
+EXPERIMENT – 1
+AIM:
+Implement the data link layer framing methods such as Character Stuffing and Bit Stuffing.
+THEORY:
+Framing is a function of the Data Link Layer used to separate data into frames for reliable transmission.
+1. Character Stuffing:
+Special characters are added at the beginning and end of data. If the same special characters appear inside the data, an escape character is inserted before them.
+2. Bit Stuffing:
+In bit-oriented protocols, after every sequence of five consecutive 1’s, a 0 is inserted to avoid confusion with flag patterns.
+PROGRAM:
+Character Stuffing Program:
+def character_stuffing(data):
+    start_flag = '@'
+    end_flag = '#'
+    escape_char = '/'
 
+    stuffed_data = ''
 
-def main():
-    """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'recyclinkproj.settings')
-    try:
-        from django.core.management import execute_from_command_line
-    except ImportError as exc:
-        raise ImportError(
-            "Couldn't import Django. Are you sure it's installed and "
-            "available on your PYTHONPATH environment variable? Did you "
-            "forget to activate a virtual environment?"
-        ) from exc
-    execute_from_command_line(sys.argv)
+    for char in data:
+        if char in [start_flag, end_flag, escape_char]:
+            stuffed_data += escape_char
 
+        stuffed_data += char
 
-if __name__ == '__main__':
-    main()
+    framed_data = start_flag + stuffed_data + end_flag
+    return framed_data
 
+data = "Hello/@World#"
+stuffed = character_stuffing(data)
+print("Character Stuffed Frame:", stuffed)
 
+Bit Stuffing Program:
+def bit_stuffing(data_bits):
+    stuffed = ''
+    count = 0
 
--------------------------------------------    1
-import numpy as np
+    for bit in data_bits:
+        stuffed += bit
 
-print("NumPy version:", np.__version__)
+        if bit == '1':
+            count += 1
 
-a = np.array([1, 2, 3, 4, 5])
+            if count == 5:
+                stuffed += '0'
+                count = 0
+        else:
+            count = 0
 
-b = np.array([
-    [1, 2, 3],
-    [4, 5, 6]
-])
+    return stuffed
 
-c = np.array([
-    [[1, 2], [3, 4]],
-    [[5, 6], [7, 8]]
-])
+binary_data = "01111110111110"
+stuffed = bit_stuffing(binary_data)
+print("Bit Stuffed Data:", stuffed)
 
-print("\n1D Array:")
-print(a)
+OUTPUT:
+Character Stuffed Frame:
+@Hello//@World/##
 
-print("\n2D Array:")
-print(b)
+Bit Stuffed Data:
+0111110101111100
 
-print("\n3D Array:")
-print(c)
+RESULT:
+Thus, the data link layer framing methods Character Stuffing and Bit Stuffing were implemented successfully.
 
-print("\nDimensions of b:", b.ndim)
-print("Shape of b:", b.shape)
-print("Data type of b:", b.dtype)
-print("Total elements in b:", b.size)
 
-print("\nFirst row of 2D array:", b[0])
-print("Element at position (1,2):", b[1, 2])
-print("First two elements of 1D array:", a[:2])
 
-x = np.array([
-    [1, 2],
-    [3, 4]
-])
 
-y = np.array([
-    [5, 6],
-    [7, 8]
-])
+-------------------------------------------------
 
-print("\nMatrix x:")
-print(x)
 
-print("\nMatrix y:")
-print(y)
 
-print("\nMatrix Addition:")
-print(x + y)
+EXPERIMENT – 4
+AIM:
+Implement Dijkstra’s algorithm to compute the shortest path in a graph.
+THEORY:
+Dijkstra’s algorithm is used to find the shortest path from a source node to all other nodes in a weighted graph.
+PROGRAM:
+import heapq
 
-print("\nMatrix Subtraction:")
-print(x - y)
+def dijkstra(graph, start):
+    dist = {v: float('inf') for v in graph}
+    dist[start] = 0
+    pq = [(0, start)]
 
-print("\nMatrix Multiplication:")
-print(np.dot(x, y))
+    while pq:
+        d, v = heapq.heappop(pq)
 
-print("\nTranspose of x:")
-print(x.T)
+        for n, w in graph[v].items():
+            nd = d + w
 
-print("\nInverse of x:")
-print(np.linalg.inv(x))
+            if nd < dist[n]:
+                dist[n] = nd
+                heapq.heappush(pq, (nd, n))
 
-arr = np.array([1, 4, 9, 16, 25])
+    return dist
 
-print("\nArray for Mathematical Functions:")
-print(arr)
+graph = {
+    'A': {'B': 4, 'C': 2},
+    'B': {'A': 4, 'C': 5, 'D': 10},
+    'C': {'A': 2, 'B': 5, 'D': 3},
+    'D': {'B': 10, 'C': 3}
+}
 
-print("\nSquare Roots:")
-print(np.sqrt(arr))
+result = dijkstra(graph, 'A')
 
-print("\nExponential Values:")
-print(np.exp(arr))
+for i, j in result.items():
+    print(i, ":", j)
 
-print("\nSine Values:")
-print(np.sin(arr))
+OUTPUT:
+A : 0
+B : 4
+C : 2
+D : 5
 
-print("\nMean:")
-print(np.mean(arr))
+RESULT:
+Thus, Dijkstra’s algorithm was implemented successfully to find the shortest path in a graph.
 
-print("\nStandard Deviation:")
-print(np.std(arr))
 
 
 
--------------------------------       1 output
+---------------------------------------------
 
 
-NumPy version: 1.24.3
 
-1D Array:
-[1 2 3 4 5]
+EXPERIMENT – 11
+AIM:
+Simulate the Implementing Routing Protocols using Border Gateway Protocol (BGP).
 
-2D Array:
-[[1 2 3]
- [4 5 6]]
+THEORY:
+Border Gateway Protocol (BGP) is an Exterior Gateway Protocol used to exchange routing information between autonomous systems in a network.
 
-3D Array:
-[[[1 2]
-  [3 4]]
+PROCEDURE:
 
- [[5 6]
-  [7 8]]]
+Step 1: Open Cisco Packet Tracer
+1. Launch Cisco Packet Tracer on your computer.
 
-Dimensions of b: 2
-Shape of b: (2, 3)
-Data type of b: int32
-Total elements in b: 6
+Step 2: Create a Network Topology
+1. Add Devices
+o Drag three routers (Router0, Router1, Router2) onto the workspace.
+o Add two switches and two PCs (PC0 and PC1).
 
-First row of 2D array: [1 2 3]
-Element at position (1,2): 6
-First two elements of 1D array: [1 2]
+2. Connect Devices Using Cables
+o Use copper straight-through cables to connect:
+ PC0 to Switch0
+ PC1 to Switch1
+ Switch0 to Router0
+ Switch1 to Router2
 
-Matrix x:
-[[1 2]
- [3 4]]
+o Use copper cross-over cables to connect routers:
+ Router0 to Router1
+ Router1 to Router2
 
-Matrix y:
-[[5 6]
- [7 8]]
+Step 3: Assign IP Addresses
+Each router and end device needs an IP address.
 
-Matrix Addition:
-[[ 6  8]
- [10 12]]
+Configuring IP Addresses to PCs
 
-Matrix Subtraction:
-[[-4 -4]
- [-4 -4]]
+PC0:
+IP Address : 192.168.10.2
+Subnet Mask : 255.255.255.0
+Default Gateway : 192.168.10.1
 
-Matrix Multiplication:
-[[19 22]
- [43 50]]
+PC1:
+IP Address : 192.168.20.2
+Subnet Mask : 255.255.255.0
+Default Gateway : 192.168.20.1
 
-Transpose of x:
-[[1 3]
- [2 4]]
+Step 4: Router Configuration
 
-Inverse of x:
-[[-2.   1. ]
- [ 1.5 -0.5]]
+At ROUTER 0:
 
-Array for Mathematical Functions:
-[ 1  4  9 16 25]
+enable
+configure terminal
+interface g0/0
+ip address 192.168.10.1 255.255.255.0
+no shutdown
+exit
+interface g0/1
+ip address 10.0.0.1 255.255.255.0
+no shutdown
+exit
 
-Square Roots:
-[1. 2. 3. 4. 5.]
+At ROUTER 1:
 
-Exponential Values:
-[2.71828183e+00 5.45981500e+01 8.10308393e+03
- 8.88611052e+06 7.20048993e+10]
+enable
+configure terminal
+interface g0/0
+ip address 10.0.0.2 255.255.255.0
+no shutdown
+exit
+interface g0/1
+ip address 20.0.0.1 255.255.255.0
+no shutdown
+exit
 
-Sine Values:
-[ 0.84147098 -0.7568025   0.41211849 -0.28790332 -0.13235175]
+At ROUTER 2:
 
-Mean:
-11.0
+enable
+configure terminal
+interface g0/0
+ip address 20.0.0.2 255.255.255.0
+no shutdown
+exit
+interface g0/1
+ip address 192.168.20.1 255.255.255.0
+no shutdown
+exit
 
-Standard Deviation:
-8.648699324175862
+OUTPUT:
+All router interfaces became active and successful ping messages were received between PCs.
 
+RESULT:
+Thus, the routing protocol simulation using Border Gateway Protocol (BGP) was implemented successfully.
 
-----------------------------------------------------          10 
 
-import nltk
-from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk.stem import PorterStemmer, WordNetLemmatizer
 
-nltk.download('punkt')
-nltk.download('punkt_tab')
-nltk.download('wordnet')
-nltk.download('averaged_perceptron_tagger_eng')
+----------------------------------
 
-text = "Artificial Intelligence is transforming the world. NLP is a branch of AI."
 
-sentences = sent_tokenize(text)
+EXPERIMENT – 12
+AIM:
+Simulate the OPEN SHORTEST PATH FIRST routing protocol based on the cost assigned to the path.
 
-print("\n----- Sentence Segmentation -----")
-for i, sentence in enumerate(sentences, 1):
-    print(f"{i}: {sentence}")
+THEORY:
+Open Shortest Path First (OSPF) is a link-state routing protocol used to find the shortest path between source and destination using cost values.
 
-words = word_tokenize(text)
+PROCEDURE:
 
-print("\n----- Word Tokenization -----")
-print(words)
+Step 1: Open Cisco Packet Tracer
+1. Launch Cisco Packet Tracer on your computer.
 
-ps = PorterStemmer()
-stem_words = [ps.stem(word) for word in words]
+Step 2: Create a Network Topology
+1. Add Devices
+o Drag two routers (Router0, Router1) onto the workspace.
+o Add two PCs (PC0 and PC1).
 
-print("\n----- Stemming -----")
-for original, stem in zip(words, stem_words):
-    print(f"{original}  -->  {stem}")
+2. Connect Devices Using Cables
+o Use copper straight-through cables to connect:
+ PC0 to Router0
+ PC1 to Router1
 
-lm = WordNetLemmatizer()
-lemma_words = [lm.lemmatize(word) for word in words]
+o Use copper cross-over cable to connect:
+ Router0 to Router1
 
-print("\n----- Lemmatization -----")
-for original, lemma in zip(words, lemma_words):
-    print(f"{original}  -->  {lemma}")
+Step 3: Assign IP Addresses
+Each router and end device needs an IP address.
 
+Configuring IP Addresses to PCs
 
+PC0:
+IP Address : 198.123.1.11
+Subnet Mask : 255.255.255.0
+Default Gateway : 198.123.1.1
 
-----------------------------------------------------  10 output
+PC1:
+IP Address : 198.123.3.11
+Subnet Mask : 255.255.255.0
+Default Gateway : 198.123.3.1
 
+Step 4: Router Configuration
 
------ Sentence Segmentation -----
-1: Artificial Intelligence is transforming the world.
-2: NLP is a branch of AI.
+At ROUTER 0:
 
------ Word Tokenization -----
-['Artificial', 'Intelligence', 'is', 'transforming', 'the', 'world', '.', 'NLP', 'is', 'a', 'branch', 'of', 'AI', '.']
+enable
+configure terminal
+interface g0/0
+ip address 198.123.1.1 255.255.255.0
+no shutdown
+exit
 
------ Stemming -----
-Artificial  -->  artifici
-Intelligence  -->  intellig
-is  -->  is
-transforming  -->  transform
-the  -->  the
-world  -->  world
-.  -->  .
-NLP  -->  nlp
-is  -->  is
-a  -->  a
-branch  -->  branch
-of  -->  of
-AI  -->  ai
-.  -->  .
+interface g0/1
+ip address 10.0.0.1 255.255.255.0
+no shutdown
+exit
 
------ Lemmatization -----
-Artificial  -->  Artificial
-Intelligence  -->  Intelligence
-is  -->  is
-transforming  -->  transforming
-the  -->  the
-world  -->  world
-.  -->  .
-NLP  -->  NLP
-is  -->  is
-a  -->  a
-branch  -->  branch
-of  -->  of
-AI  -->  AI
-.  -->  .
-[nltk_data] Downloading package punkt to /root/nltk_data...
-[nltk_data]   Package punkt is already up-to-date!
-[nltk_data] Downloading package punkt_tab to /root/nltk_data...
-[nltk_data]   Package punkt_tab is already up-to-date!
-[nltk_data] Downloading package wordnet to /root/nltk_data...
-[nltk_data]   Package wordnet is already up-to-date!
-[nltk_data] Downloading package averaged_perceptron_tagger_eng to
-[nltk_data]     /root/nltk_data...
-[nltk_data]   Package averaged_perceptron_tagger_eng is already up-to-
-[nltk_data]       date!
+router ospf 1
+network 198.123.1.0 0.0.0.255 area 0
+network 10.0.0.0 0.0.0.255 area 0
+exit
+
+At ROUTER 1:
+
+enable
+configure terminal
+interface g0/0
+ip address 198.123.3.1 255.255.255.0
+no shutdown
+exit
+
+interface g0/1
+ip address 10.0.0.2 255.255.255.0
+no shutdown
+exit
+
+router ospf 1
+network 198.123.3.0 0.0.0.255 area 0
+network 10.0.0.0 0.0.0.255 area 0
+exit
+
+OUTPUT:
+Successful ping messages were received between PC0 and PC1 through OSPF routing.
+
+RESULT:
+Thus, the OPEN SHORTEST PATH FIRST (OSPF) routing protocol was implemented successfully.
+
+
+
+-----------------------
+
+
+
+EXPERIMENT – 13
+AIM:
+Install Wireshark Tool on PC and use it to:
+a) Capture network traffic
+b) Determine default gateway address of your network
+c) Examine frame format and contents of Ethernet frames
+d) Filter and examine only ICMP traffic
+e) Run various network services like ping, ssh, dns etc. and examine the traffic captured by Wireshark
+
+THEORY:
+Wireshark is an open-source network protocol analyzer used to capture and analyze network packets in real time.
+
+PROCEDURE:
+
+Step 1: Install Wireshark Tool on PC
+1. Download Wireshark from the official website.
+2. Run the installation setup.
+3. Install WinPcap or Npcap when prompted.
+4. Launch Wireshark after installation.
+
+Step 2: Capture Network Traffic
+1. Open Wireshark and select the active network interface.
+2. Click Start Capturing Packets.
+3. Perform network activities such as opening a website or pinging a server.
+4. Stop the capture after observing the traffic.
+
+Step 3: Determine Default Gateway Address
+1. Open Command Prompt or Terminal.
+2. Type the command to view network configuration.
+3. Note the Default Gateway IP Address.
+4. Use a filter in Wireshark to view gateway-related traffic.
+
+Step 4: Examine Ethernet Frame Format
+1. Locate a captured Ethernet II frame.
+2. Expand Frame, Ethernet II, and Internet Protocol sections.
+3. Observe source, destination, and type fields.
+
+Step 5: Filter and Examine ICMP Traffic
+1. Enter the ICMP filter in Wireshark.
+2. Run the ping command.
+3. Observe the ICMP packets captured.
+
+Step 6: Run Network Services and Examine Traffic
+
+Service          Command/Action        Filter
+Ping             ping command          icmp
+SSH              Connect via SSH       tcp.port == 22
+DNS              DNS lookup            dns
+HTTP             Open website          http
+HTTPS            Access secure site    tls
+
+OUTPUT:
+Network packets were captured successfully and different protocol packets such as ICMP, DNS, HTTP, and HTTPS were analyzed using Wireshark.
+
+RESULT:
+Thus, Wireshark was installed successfully and network traffic analysis was performed successfully.
