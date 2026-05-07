@@ -365,3 +365,211 @@ Network packets were captured successfully and different protocol packets such a
 
 RESULT:
 Thus, Wireshark was installed successfully and network traffic analysis was performed successfully.
+
+
+
+--------------------------------------------------
+EXPERIMENT-5
+
+#include<stdio.h>
+
+void main()
+{
+    int i,j,d[20],dt[50][50],min=0,mini=0,p,q,y=0,nd[30];
+    char r[30],n[30],l[30],x;
+
+    printf("enter number of nodes\n");
+    scanf("%d",&p);
+
+    printf("enter nodes\n");
+
+    for(i=1;i<=p;i++)
+        scanf(" %c",&r[i]);
+
+    printf("enter node for which you want to calculate routing table\n");
+    scanf(" %c",&x);
+
+    for(i=1;i<=p;i++)
+    {
+        if(x==r[i])
+            y=i;
+    }
+
+    nd[y]=0;
+    l[y]='-';
+
+    printf("enter number of neighbours are there for %c node\n",x);
+    scanf("%d",&q);
+
+    printf("enter neighbours of %c node\n",x);
+
+    for(i=1;i<=q;i++)
+        scanf(" %c",&n[i]);
+
+    printf("enter delays table\n");
+
+    for(i=1;i<=p;i++)
+    {
+        for(j=1;j<=q;j++)
+        {
+            scanf("%d",&dt[i][j]);
+        }
+    }
+
+    printf("enter delay from %c to each of its neighbour\n",x);
+
+    for(i=1;i<=q;i++)
+        scanf("%d",&d[i]);
+
+    for(i=1;i<=p;i++)
+    {
+        min=999;
+
+        for(j=1;j<=q;j++)
+        {
+            if((dt[i][j] + d[j]) < min)
+            {
+                min = dt[i][j] + d[j];
+                mini = j;
+            }
+        }
+
+        nd[i] = min;
+        l[i] = n[mini];
+    }
+
+    nd[y]=0;
+    l[y]='-';
+
+    printf("\nrouting vector table for %c is\n",x);
+
+    for(i=1;i<=p;i++)
+    {
+        printf("%d\t%c\n",nd[i],l[i]);
+    }
+}
+
+OUTPUT:
+
+enter number of nodes
+5
+
+enter nodes
+A
+B
+C
+D
+E
+
+enter node for which you want to calculate routing table
+A
+
+enter number of neighbours are there for A node
+2
+
+enter neighbours of A node
+B
+D
+
+enter delays table
+0 0
+8 2
+7 3
+2 0
+6 1
+
+enter delay from A to each of its neighbour
+5
+4
+
+routing vector table for A is
+
+0    -
+8    D
+7    D
+7    B
+6    D
+
+-----------------------------------------
+
+EXPERIMENT – 10
+
+AIM:
+Get the MAC or Physical address of the system using Address Resolution Protocol (ARP).
+
+THEORY:
+Address Resolution Protocol (ARP) is used to map an IP address to its corresponding MAC address in a local network. ARP sends a request packet to identify the physical address of a device.
+
+PROGRAM:
+
+from scapy.all import ARP, Ether, srp
+
+def get_mac(ip):
+
+    arp_req = ARP(pdst=ip)
+
+    broadcast = Ether(dst="ff:ff:ff:ff:ff:ff")
+
+    packet = broadcast / arp_req
+
+    result = srp(packet, timeout=2, verbose=False)[0]
+
+    for sent, received in result:
+        return received.hwsrc
+
+    return None
+
+target_ip = "192.168.1.1"
+
+mac = get_mac(target_ip)
+
+if mac:
+    print("MAC address of", target_ip, "is", mac)
+else:
+    print("No response for", target_ip)
+
+OUTPUT:
+
+MAC address of 192.168.1.1 is 14:cc:20:ab:98:11
+
+RESULT:
+Thus, the MAC or Physical address of the system was obtained successfully using Address Resolution Protocol (ARP).
+
+
+-------------------------------------------
+
+EXPERIMENT – 16
+
+AIM:
+Simulate the transmission of ping messages over a network topology consisting of 6 nodes and find the number of packets dropped due to congestion.
+
+THEORY:
+Ping is a network utility used to test connectivity between nodes in a network. Congestion occurs when network traffic becomes high, causing packet loss and delays in transmission.
+
+STEPS:
+
+Step 1:
+Click on the subnet icon on the toolbar and then click on the screen of the working window.
+
+Step 2:
+Select the required number of hosts and a suitable radius between the host and the switch.
+
+Step 3:
+In the edit mode, get the IP address of one of the hosts say, host1 and then for the other host say, host2 set the drop packet and number of collisions statistics as described in the earlier experiments.
+
+Step 4:
+Now run the simulation.
+
+Step 5:
+Now click on any one of the hosts and click on command console and ping the destination node.
+
+ping IP Address of the host
+
+Note:
+The number of dropped packets are obtained only when the traffic is more in the network. For checking the number of packets dropped press Ctrl + C.
+
+OUTPUT:
+Packets were transmitted between source and destination successfully. Due to congestion, some packets were dropped during the simulation.
+
+RESULT:
+Thus, the transmission of ping messages over a network topology consisting of 6 nodes was simulated successfully and the number of packets dropped due to congestion was observed.
